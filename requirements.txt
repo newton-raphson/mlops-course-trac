@@ -1,0 +1,13 @@
+numpy
+pandas
+torch
+torchvision
+fastapi
+uvicorn
+Pillow
+wandb
+requests
+python-multipart
+scikit-learn
+python-dotenv
+configparser
