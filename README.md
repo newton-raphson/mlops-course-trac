@@ -1,7 +1,4 @@
 <!-- write Readme for this file -->
-
-docker build -t my-fastapi-app .
-docker run -d -p 8000:8000 my-fastapi-app /app/runs/run.ini
 ## MLOps Course Track
 
 This project is part of the MLOps course track for Fall 2024. It demonstrates how to build and run a FastAPI application using Docker.
@@ -10,6 +7,15 @@ This project is part of the MLOps course track for Fall 2024. It demonstrates ho
 
 - Docker installed on your machine
 - Basic knowledge of FastAPI and Docker
+### User Interface
+
+Below is an image of the user interface:
+
+![User Interface](ui/ui.png)
+
+### Building the Docker Image
+
+To build the Docker image, run the following command:
 
 ### Building the Docker Image
 
