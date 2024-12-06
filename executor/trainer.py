@@ -2,11 +2,13 @@ import torch
 from model.model import LogisticRegression
 from torchvision import datasets, transforms
 import wandb
+import numpy as np
 
 class Trainer:
     def __init__(self,config):
         self.config = config
         self.model = LogisticRegression(config.input_dim,config.output_dim,config.hidden_layers)
+
         print(self.model.hidden_layers)
         self.optimizer = torch.optim.SGD(self.model.parameters(), lr=config.lr)
         self.criterion = torch.nn.CrossEntropyLoss()
@@ -42,18 +44,18 @@ class Trainer:
                     for i in range(data.size(0)):  # Iterate over batch
                         if len(logged_images) >= 5:
                             break
-                        img = data[i].cpu()
-                        img = img.permute(1, 2, 0)  # Convert to HWC format for wandb
+                        img = data[i].cpu().numpy().squeeze()  # Remove channel dimension
                         pred_label = pred[i].item()
                         true_label = target[i].item()
-                        logged_images.append(wandb.Image(
-                            img,
-                            caption=f"Prediction: {pred_label}, True: {true_label}"
-                        ))
 
+                        img = wandb.Image(img, caption=f"Pred: {pred_label}, True: {true_label}")
+                        logged_images.append(img)
+       
         # Log images to wandb every 'log_interval' epochs
         if epoch % self.config.log_interval == 0 and logged_images:
             wandb.log({"test_predictions": logged_images}, step=epoch)
+            
+
 
         # Compute average loss
         test_loss /= len(test_loader.dataset)
